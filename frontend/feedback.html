@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Feedback Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eaf2f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2980b9;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #1c5980;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Student Feedback</h2>
+    <form id="feedbackForm">
+      <div class="form-group">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" name="studentName" required>
+      </div>
+      <div class="form-group">
+        <label for="studentID">Student ID</label>
+        <input type="text" id="studentID" name="studentID" required>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select Category</option>
+          <option value="academic">Academic</option>
+          <option value="hostel">Hostel</option>
+          <option value="general">General</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Feedback Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit">Submit Feedback</button>
+    </form>
+    <p id="msg"></p>
+  </div>
+
+<script>
+  document.getElementById('feedbackForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const studentName = document.getElementById("studentName").value;
+    const studentID = document.getElementById("studentID").value;
+    const category = document.getElementById("category").value;
+    const message = document.getElementById("message").value;
+
+    // Call AI agent service
+    try {
+      const aiResponse = await fetch("http://localhost:5001/analyze", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'feedback', message })
+      });
+      const aiData = await aiResponse.json();
+      if (aiData.status === 'success') {
+        alert(aiData.analysis);
+      }
+    } catch (error) {
+      console.error("AI agent call failed:", error);
+    }
+
+    // Proceed with original feedback submission
+    const response = await fetch("http://localhost:5003/feedback", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentName, studentID, category, message })
+    });
+    const data = await response.json();
+    document.getElementById('msg').textContent = data.status === 'success' ? 'Feedback submitted!' : 'Error: ' + data.message;
+  });
+</script>
+
+</body>
+</html>

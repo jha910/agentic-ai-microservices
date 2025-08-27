@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hostel Leave Request</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eaf2f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Hostel Leave Request</h2>
+    <form id="hostelLeaveForm">
+      <div class="form-group">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" name="studentName" required>
+      </div>
+      <div class="form-group">
+        <label for="studentID">Student ID</label>
+        <input type="text" id="studentID" name="studentID" required>
+      </div>
+      <div class="form-group">
+        <label for="leaveReason">Leave Reason</label>
+        <textarea id="leaveReason" name="leaveReason" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="leaveFrom">Leave From</label>
+        <input type="date" id="leaveFrom" name="leaveFrom" required>
+      </div>
+      <div class="form-group">
+        <label for="leaveTo">Leave To</label>
+        <input type="date" id="leaveTo" name="leaveTo" required>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="msg"></p>
+  </div>
+
+<script>
+  document.getElementById('hostelLeaveForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const studentName = document.getElementById("studentName").value;
+    const studentID = document.getElementById("studentID").value;
+    const leaveReason = document.getElementById("leaveReason").value;
+    const leaveFrom = document.getElementById("leaveFrom").value;
+    const leaveTo = document.getElementById("leaveTo").value;
+
+    // Call AI agent service
+    try {
+      const aiResponse = await fetch("http://localhost:5001/analyze", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'leave', leaveReason })
+      });
+      const aiData = await aiResponse.json();
+      if (aiData.status === 'success') {
+        alert(aiData.validation);
+      }
+    } catch (error) {
+      console.error("AI agent call failed:", error);
+    }
+
+    // Proceed with original leave request
+    const response = await fetch("http://localhost:5005/leave", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentName, studentID, leaveReason, leaveFrom, leaveTo })
+    });
+    const data = await response.json();
+    document.getElementById('msg').textContent = data.status === 'success' ? 'Leave request submitted!' : 'Error: ' + data.message;
+  });
+</script>
+
+</body>
+</html>

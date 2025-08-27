@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Services Portal</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #e6f2ff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 30px;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.2s ease;
+      text-decoration: none;
+      color: #333;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    .card-title {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: #0066cc;
+    }
+    .card-description {
+      font-size: 0.95em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Services Portal</h1>
+  <div class="dashboard">
+    <a href="course_enroll.html" class="card">
+      <div class="card-title">Course Enrollment</div>
+      <div class="card-description">Enroll in academic courses</div>
+    </a>
+    <a href="hostel_leave.html" class="card">
+      <div class="card-title">Hostel Leave Request</div>
+      <div class="card-description">Request leave from hostel</div>
+    </a>
+    <a href="internship_apply.html" class="card">
+      <div class="card-title">Internship Application</div>
+      <div class="card-description">Apply for internships</div>
+    </a>
+    <a href="feedback.html" class="card">
+      <div class="card-title">Feedback</div>
+      <div class="card-description">Submit feedback to administration</div>
+    </a>
+  </div>
+</body>
+</html>
