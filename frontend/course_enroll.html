@@ -98,7 +98,8 @@
 
     // Call AI agent service
     try {
-      const aiResponse = await fetch("http://localhost:5001/analyze", {
+      // const aiResponse = await fetch("http://localhost:5001/analyze", {
+      const aiResponse = await fetch("https://backend-ai-agent-service.onrender.com/analyze",{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'enroll', studentName, courseName })
@@ -112,7 +113,8 @@
     }
 
     // Proceed with original enrollment request
-    const response = await fetch("http://localhost:5002/enroll", {
+    // const response = await fetch("http://localhost:5002/enroll", {
+    const response = await fetch("https://backend-enroll-service.onrender.com/enroll", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ studentName, studentID, courseName, semester })

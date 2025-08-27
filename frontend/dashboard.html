@@ -5,24 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Student Services Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #e6f2ff;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-    h1 {
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px;
       text-align: center;
-      color: #004080;
-      margin-bottom: 30px;
+      font-size: 1.5em;
     }
     .dashboard {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
       max-width: 1000px;
-      margin: auto;
+      margin: 30px auto;
+      padding: 0 20px;
     }
     .card {
       background-color: #ffffff;
@@ -47,27 +51,59 @@
       font-size: 0.95em;
       color: #666;
     }
+    .card i {
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: #004080;
+    }
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+    }
+    footer a {
+      color: #a0d8ff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <h1>Student Services Portal</h1>
+  <header>
+    Student Services Portal
+  </header>
   <div class="dashboard">
     <a href="course_enroll.html" class="card">
+      <i class="fas fa-book-open"></i>
       <div class="card-title">Course Enrollment</div>
       <div class="card-description">Enroll in academic courses</div>
     </a>
     <a href="hostel_leave.html" class="card">
+      <i class="fas fa-bed"></i>
       <div class="card-title">Hostel Leave Request</div>
       <div class="card-description">Request leave from hostel</div>
     </a>
     <a href="internship_apply.html" class="card">
+      <i class="fas fa-briefcase"></i>
       <div class="card-title">Internship Application</div>
       <div class="card-description">Apply for internships</div>
     </a>
     <a href="feedback.html" class="card">
+      <i class="fas fa-comment-dots"></i>
       <div class="card-title">Feedback</div>
       <div class="card-description">Submit feedback to administration</div>
     </a>
   </div>
+  <footer>
+    <p>
+      <a href="https://github.com/jha910/agentic-ai-microservices" target="_blank">GitHub Repository</a> |
+      <a href="https://dashboard.render.com" target="_blank">Render Dashboard</a>
+    </p>
+  </footer>
 </body>
 </html>

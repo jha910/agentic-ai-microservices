@@ -105,7 +105,8 @@
 
     // Call AI agent service
     try {
-      const aiResponse = await fetch("http://localhost:5001/analyze", {
+      // const aiResponse = await fetch("http://localhost:5001/analyze", {
+      const aiResponse = await fetch("https://backend-ai-agent-service.onrender.com/analyze",{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'feedback', message })
@@ -119,7 +120,8 @@
     }
 
     // Proceed with original feedback submission
-    const response = await fetch("http://localhost:5003/feedback", {
+    // const response = await fetch("http://localhost:5003/feedback", {
+    const response = await fetch("https://backend-feedback-service.onrender.com/feedback",{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ studentName, studentID, category, message })
